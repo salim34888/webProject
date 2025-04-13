@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Результат теста</title>
+</head>
+<body>
+    <h1>Результаты теста: {{ test.title }}</h1>
+    <p>Правильных ответов: {{ score }}/{{ total }} ({{ percent }}%)</p>
+
+    <h2>Разбор ответов:</h2>
+    {% for question in questions %}
+        <div style="margin: 20px 0; padding: 10px; border: 1px solid #ddd;">
+            <h3>Вопрос {{ forloop.counter }}:</h3>
+            <p>{{ question.text }}</p>
+
+            <h4>Правильные ответы:</h4>
+            <ul>
+                {% for answer in question.answer_set.all %}
+                    {% if answer.is_correct %}
+                        <li style="color: green;">✓ {{ answer.text }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+
+    <a href="{% url 'test_list' %}">← Вернуться к тестам</a>
+</body>
+</html>

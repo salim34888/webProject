@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Запрос #{{ ticket.id }}</h1>
+
+<div class="ticket-meta">
+    <p><strong>Тема:</strong> {{ ticket.subject }}</p>
+    <p><strong>Статус:</strong> {{ ticket.get_status_display }}</p>
+    <p><strong>Дата создания:</strong> {{ ticket.created_at|date:"d.m.Y H:i" }}</p>
+</div>
+
+<div class="ticket-message">
+    <h3>Ваше сообщение:</h3>
+    <p>{{ ticket.message|linebreaks }}</p>
+</div>
+
+{% if ticket.admin_response %}
+<div class="admin-response">
+    <h3>Ответ поддержки:</h3>
+    <p>{{ ticket.admin_response|linebreaks }}</p>
+</div>
+{% endif %}
+
+<a href="{% url 'support:ticket_list' %}">← Назад к списку</a>
+{% endblock %}

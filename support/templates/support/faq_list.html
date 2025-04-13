@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Часто задаваемые вопросы</h1>
+
+{% for category in categories %}
+<div class="faq-category">
+    <h2>{{ category.name }}</h2>
+
+    <div class="faq-items">
+        {% for faq in category.faq_set.all %}
+        <details class="faq-item">
+            <summary>{{ faq.question }}</summary>
+            <div class="faq-answer">
+                {{ faq.answer|linebreaks }}
+            </div>
+        </details>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+
+<a href="{% url 'support:ticket_list' %}">Мои запросы в поддержку</a>
+{% endblock %}

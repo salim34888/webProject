@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>База знаний</title>
+</head>
+<body>
+    <h1>База знаний</h1>
+    <form method="get">
+        <input type="text" name="search" placeholder="Поиск...">
+        <select name="category">
+            <option value="">Все категории</option>
+            {% for cat in categories %}
+                <option value="{{ cat.id }}">{{ cat.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Фильтровать</button>
+    </form>
+
+    <div class="articles">
+        {% for article in articles %}
+            <div class="article {% if article.is_pro %}pro-article{% endif %}">
+                <h3>
+                    <a href="{% url 'article_detail' article.id %}">
+                        {{ article.title }}
+                        {% if article.is_pro %}(PRO){% endif %}
+                    </a>
+                </h3>
+                <p>Категория: {{ article.category.name }}</p>
+            </div>
+        {% empty %}
+            <p>Статей не найдено</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Главная</title>
+</head>
+<body>
+    <h1>Добро пожаловать в SoftSkills Trainer!</h1>
+
+    {% if user.is_authenticated %}
+        <p>Привет, {{ user.username }}! Твой статус: {{ user.pro_status }}</p>
+        <a href="{% url 'users:profile' %}">Личный кабинет</a> |
+        <a href="{% url 'logout' %}">Выйти</a>
+    {% else %}
+        <a href="{% url 'login' %}">Войти</a> |
+        <a href="{% url 'register' %}">Регистрация</a>
+    {% endif %}
+</body>
+</html>

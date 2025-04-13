@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Все тесты</title>
+</head>
+<body>
+    <h1>Доступные тесты</h1>
+    <!-- templates/tests/list.html -->
+    <ul>
+      {% for test in tests %}
+        <li>
+          <a href="{% url 'take_test' test.id %}">{{ test.title }}</a>
+          (Сложность: {{ test.get_difficulty_display }})
+        </li>
+      {% empty %}
+        <li>Тесты временно недоступны</li>
+      {% endfor %}
+    </ul>
+</body>
+</html>

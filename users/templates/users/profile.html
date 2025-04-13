@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Личный кабинет</title>
+</head>
+<body>
+    <h1>Привет, {{ user.username }}!</h1>
+    <a href="/">На главную</a> |
+    <a href="{% url 'logout' %}">Выйти</a>
+
+    <h2>Ваш статус: {{ user.pro_status }}</h2>
+    {% if user.pro_status == 'free' %}
+        <form action="{% url 'upgrade_pro' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="pro-button">
+                Перейти на PRO →
+            </button>
+        </form>
+    {% endif %}
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <h3>Избранные статьи:</h3>
+    <ul>
+        {% for fav in request.user.userfavorite_set.all %}
+            <li><a href="{% url 'article_detail' fav.article.id %}">{{ fav.article.title }}</a></li>
+        {% empty %}
+            <li>Нет избранных статей</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Ваши цели:</h2>
+    <ul>
+        {% for goal in goals %}
+            <li>{{ goal.title }} - {{ goal.progress }}%</li>
+        {% empty %}
+            <li>Нет активных целей</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Результаты тестов:</h2>
+    <ul>
+        {% for result in test_results %}
+            <li>{{ result.test.title }}: {{ result.score }} баллов</li>
+        {% empty %}
+            <li>Тесты еще не пройдены</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

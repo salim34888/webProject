@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ article.title }}</title>
+</head>
+<body>
+    <h1>{{ article.title }}</h1>
+    {% if article.is_pro %}<p style="color: gold;">PRO-контент</p>{% endif %}
+
+    <div class="content">
+        {{ article.content|linebreaks }}
+    </div>
+
+    <form method="post" action="{% url 'toggle_favorite' article.id %}">
+        {% csrf_token %}
+        <button type="submit">
+            {% if is_favorite %}Удалить из избранного{% else %}В избранное{% endif %}
+        </button>
+    </form>
+
+    <a href="{% url 'article_list' %}">← Назад к списку</a>
+</body>
+</html>

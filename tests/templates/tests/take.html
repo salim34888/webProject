@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ test.title }}</title>
+</head>
+<body>
+    <h1>{{ test.title }}</h1>
+    <h3>{{ test.description }}</h3>
+
+    <form method="post">
+        {% csrf_token %}
+        {% for question in questions %}
+            <div style="margin: 20px 0; padding: 10px; border: 1px solid #ccc;">
+                <p><strong>Вопрос {{ forloop.counter }}:</strong> {{ question.text }}</p>
+
+                {% for answer in question.answer_set.all %}
+                    <label style="display: block; margin: 5px 0;">
+                        <input type="radio"
+                               name="question_{{ question.id }}"
+                               value="{{ answer.id }}"
+                               required>
+                        {{ answer.text }}
+                    </label>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" style="padding: 10px 20px; background: #4CAF50; color: white;">
+            Завершить тест
+        </button>
+    </form>
+</body>
+</html>
