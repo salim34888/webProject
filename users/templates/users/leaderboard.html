@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Лидерборд</h1>
+
+{% if not rankings %}
+    <div class="alert alert-warning">
+        Лидерборд пуст. Пройдите тесты, чтобы появились результаты.
+    </div>
+{% else %}
+    <ol>
+        {% for ranking in rankings %}
+        <li>
+            {{ ranking.user.username }} -
+            {{ ranking.total_score }} баллов
+            (тестов: {{ ranking.tests_completed }})
+        </li>
+        {% endfor %}
+    </ol>
+{% endif %}
+{% endblock %}

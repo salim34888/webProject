@@ -1,18 +1,71 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Главная</title>
-</head>
-<body>
-    <h1>Добро пожаловать в SoftSkills Trainer!</h1>
+{% extends "base.html" %}
 
-    {% if user.is_authenticated %}
-        <p>Привет, {{ user.username }}! Твой статус: {{ user.pro_status }}</p>
-        <a href="{% url 'users:profile' %}">Личный кабинет</a> |
-        <a href="{% url 'logout' %}">Выйти</a>
-    {% else %}
-        <a href="{% url 'login' %}">Войти</a> |
-        <a href="{% url 'register' %}">Регистрация</a>
-    {% endif %}
-</body>
-</html>
+{% block content %}
+<div class="home-container">
+    <!-- Hero-секция -->
+    <section class="hero">
+        <h1>Развивайте свои Soft Skills с нами</h1>
+        <p>Пройдите тесты, изучите материалы, получите персональные рекомендации</p>
+        
+        <div class="cta-buttons">
+            {% if user.is_authenticated %}
+                <a href="{% url 'users:profile' %}" class="btn">Личный кабинет</a>
+            {% else %}
+                <a href="{% url 'users:register' %}" class="btn">Начать бесплатно</a>
+                <a href="{% url 'login' %}" class="btn secondary">Войти</a>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- Основные разделы -->
+    <section class="sections">
+        <div class="section-card">
+            <h2><a href="{% url 'test_list' %}">Тесты</a></h2>
+            <p>Проверьте свои навыки с помощью наших тестов</p>
+            
+            <h3>Последние тесты:</h3>
+            <ul>
+                {% for test in latest_tests %}
+                    <li><a href="{% url 'take_test' test.id %}">{{ test.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="section-card">
+            <h2><a href="{% url 'support:faq_list' %}">Поддержка</a></h2>
+            <p>Ответы на частые вопросы и помощь</p>
+            
+            <h3>Быстрые ссылки:</h3>
+            <ul>
+                <li><a href="{% url 'support:faq_list' %}">FAQ</a></li>
+                <li><a href="{% url 'support:create_ticket' %}">Создать запрос</a></li>
+            </ul>
+        </div>
+
+        <div class="section-card">
+            <h2><a href="#">База знаний</a></h2>
+            <p>Полезные статьи и материалы</p>
+            
+            <h3>Популярные статьи:</h3>
+            <ul>
+                {% for article in popular_articles %}
+                    <li><a href="{% url 'article_detail' article.id %}">{{ article.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+    <!-- PRO-статус -->
+    <section class="pro-section">
+        <h2>PRO-возможности</h2>
+        <ul>
+            <li>Доступ ко всем тестам</li>
+            <li>Расширенная аналитика</li>
+            <li>Персональные рекомендации</li>
+        </ul>
+        {% if user.is_authenticated and user.pro_status == 'free' %}
+            <a href="{% url 'users:upgrade_pro' %}" class="btn">Перейти на PRO</a>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

@@ -10,13 +10,13 @@
 
     <h2>Ваш статус: {{ user.pro_status }}</h2>
     {% if user.pro_status == 'free' %}
-        <form action="{% url 'upgrade_pro' %}" method="post">
+        <form action="{% url 'users:upgrade_pro' %}" method="post">
             {% csrf_token %}
-            <button type="submit" class="pro-button">
-                Перейти на PRO →
+            <button type="submit" class="btn btn-success">
+                Перейти на PRO версию
             </button>
         </form>
-    {% endif %}
+        {% endif %}
     {% if messages %}
     <div class="messages">
         {% for message in messages %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="support-form">
+    <h1>Новый запрос в поддержку</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            {{ form.subject.label_tag }}
+            {{ form.subject }}
+            {% if form.subject.errors %}
+                <div class="error">{{ form.subject.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.message.label_tag }}
+            {{ form.message }}
+            {% if form.message.errors %}
+                <div class="error">{{ form.message.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <button type="submit" class="submit-btn">Отправить запрос</button>
+    </form>
+    
+    <a href="{% url 'support:ticket_list' %}" class="back-link">← Назад к списку запросов</a>
+</div>
+{% endblock %}

@@ -2,11 +2,12 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib import messages
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from .forms import CustomUserCreationForm
-from .models import User  # Убедитесь, что модель User импортирована
+from .models import User
+from .models import UserRanking
 
 
 class SignUpView(generic.CreateView):
@@ -48,13 +49,18 @@ def upgrade_to_pro(request):
     if request.method == 'POST':
         user = request.user
         if user.pro_status != 'pro':
-            # Здесь должна быть реальная логика оплаты
             user.pro_status = 'pro'
             user.save()
-            messages.success(request, 'PRO-статус успешно активирован!')
-        else:
-            messages.info(request, 'У вас уже активирован PRO-статус')
-        return redirect('profile')
+            messages.success(request, 'Поздравляем! Теперь у вас PRO-статус')
+            return redirect('users:profile')
 
-    messages.error(request, 'Неверный запрос')
-    return redirect('profile')
+    # Если GET-запрос или что-то пошло не так
+    return redirect('users:profile')
+
+
+def leaderboard(request):
+    rankings = UserRanking.objects.select_related('user').order_by('-total_score')
+
+    return render(request, 'users/leaderboard.html', {
+        'rankings': rankings
+    })

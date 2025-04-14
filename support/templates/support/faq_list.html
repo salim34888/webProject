@@ -21,4 +21,7 @@
 {% endfor %}
 
 <a href="{% url 'support:ticket_list' %}">Мои запросы в поддержку</a>
+<a href="{% url 'support:create_ticket' %}" class="new-ticket-btn">
+    Создать новый запрос
+</a>
 {% endblock %}

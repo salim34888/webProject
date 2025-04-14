@@ -33,17 +33,14 @@ def create_ticket(request):
         form = SupportTicketForm(request.POST)
         if form.is_valid():
             ticket = form.save(commit=False)
-            ticket.user = request.user
+            ticket.user = request.user  # Привязываем к текущему пользователю
             ticket.save()
-            messages.success(request, 'Ваш запрос успешно создан!')
-            return redirect('ticket_detail', ticket_id=ticket.id)
+            messages.success(request, 'Ваш запрос успешно отправлен!')
+            return redirect('support:ticket_detail', ticket_id=ticket.id)
     else:
         form = SupportTicketForm()
 
-    return render(request, 'support/create_ticket.html', {
-        'form': form
-    })
-
+    return render(request, 'support/create_ticket.html', {'form': form})
 
 @login_required
 def ticket_detail(request, ticket_id):

@@ -16,3 +16,7 @@ class SupportTicketForm(forms.ModelForm):
                 'placeholder': 'Подробное описание вашего вопроса'
             })
         }
+        labels = {
+            'subject': 'Тема обращения',
+            'message': 'Подробное описание'
+        }
