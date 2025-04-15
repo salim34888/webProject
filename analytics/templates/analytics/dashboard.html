@@ -5,15 +5,10 @@
 </head>
 <body>
     <h1>Ваш прогресс</h1>
-
-    <h2>Цели:</h2>
-    <p>Завершено: {{ goals_data.completed }}</p>
-    <p>В процессе: {{ goals_data.in_progress }}</p>
-
     <h2>Тесты:</h2>
     <p>Всего пройдено: {{ test_stats.total_tests }}</p>
     <p>Средний балл: {{ test_stats.avg_score|floatformat:1 }}</p>
 
-    <a href="{% url 'profile' %}">← В профиль</a>
+    <a href="{% url 'users:profile' %}">← В профиль</a>
 </body>
 </html>

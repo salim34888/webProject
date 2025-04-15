@@ -1,3 +1,5 @@
+from email.policy import default
+
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 
@@ -14,14 +16,6 @@ class User(AbstractUser):
     )
 
 
-class UserGoal(models.Model):
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
-    target_date = models.DateField()
-    progress = models.PositiveIntegerField(default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-
 class UserRanking(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='ranking')
     total_score = models.IntegerField(default=0)
@@ -35,3 +29,17 @@ class UserRanking(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.total_score} баллов"
+
+
+class UserActivity(models.Model):
+    ACTIVITY_TYPES = [
+        ('test', 'Тестирование'),
+        ('article', 'Чтение статьи'),
+        ('goal', 'Прогресс цели')
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    activity_type = models.CharField(max_length=20, choices=ACTIVITY_TYPES)
+    content_id = models.IntegerField()  # ID теста/статьи/цели
+    content_title = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)

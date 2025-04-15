@@ -8,6 +8,7 @@ from django.views.generic import TemplateView
 from .forms import CustomUserCreationForm
 from .models import User
 from .models import UserRanking
+from django.views.generic import CreateView, UpdateView
 
 
 class SignUpView(generic.CreateView):
@@ -25,22 +26,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = self.request.user
-
-        # Основная информация
-        context.update({
-            'goals': user.usergoal_set.all(),
-            'test_results': user.testresult_set.all(),
-            'pro_status': user.pro_status,
-        })
-
-        # PRO-статистика
-        if user.pro_status == 'pro':
-            context['pro_features'] = {
-                'tests_completed': user.testresult_set.count(),
-                'articles_read': user.userfavorite_set.count(),
-            }
-
+        context['activities'] = self.request.user.useractivity_set.order_by('-created_at')[:10]
         return context
 
 

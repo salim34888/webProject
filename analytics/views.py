@@ -1,20 +1,14 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from users.models import UserGoal
 from tests.models import TestResult
 from django.db import models
+from io import BytesIO
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
 
 
 @login_required
 def dashboard(request):
-    # Статистика по целям
-    goals = UserGoal.objects.filter(user=request.user)
-    goals_data = {
-        'completed': goals.filter(progress=100).count(),
-        'in_progress': goals.exclude(progress=100).count()
-    }
-
-    # Статистика по тестам
     test_results = TestResult.objects.filter(user=request.user)
     test_stats = {
         'total_tests': test_results.count(),
@@ -22,6 +16,32 @@ def dashboard(request):
     }
 
     return render(request, 'analytics/dashboard.html', {
-        'goals_data': goals_data,
         'test_stats': test_stats
     })
+
+
+def generate_pdf_report(request):
+    buffer = BytesIO()
+    p = canvas.Canvas(buffer)
+
+    p.drawString(100, 800, "FUCK YOU LETHER MAN")
+
+    p.drawString(100, 780, f"SLAVE: {request.user.username}")
+
+    p.drawString(100, 700, "              .-. ")
+    p.drawString(100, 690, "        .-'``(|||) ")
+    p.drawString(100, 680, "     ,`\ \    `-`.                 88                         88 ")
+    p.drawString(100, 670, "    /   \ '``-.   `                88                         88 ")
+    p.drawString(100, 660, "  .-.  ,       `___:      88   88  88,888,  88   88  ,88888, 88888  88   88 ")
+    p.drawString(100, 650, " (:::) :        ___       88   88  88   88  88   88  88   88  88    88   88 ")
+    p.drawString(100, 640, "  `-`  `       ,   :      88   88  88   88  88   88  88   88  88    88   88 ")
+    p.drawString(100, 630, "    \   / ,..-`   ,       88   88  88   88  88   88  88   88  88    88   88 ")
+    p.drawString(100, 620, "     `./ /    .-.`        '88888'  '88888'  '88888'  88   88  '8888 '88888' ")
+    p.drawString(100, 610, "        `-..-(   ) ")
+    p.drawString(100, 600, "              `-` ")
+
+    p.showPage()
+    p.save()
+
+    buffer.seek(0)
+    return HttpResponse(buffer, content_type='application/pdf')

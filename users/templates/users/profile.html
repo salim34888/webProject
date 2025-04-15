@@ -36,15 +36,6 @@
         {% endfor %}
     </ul>
 
-    <h2>Ваши цели:</h2>
-    <ul>
-        {% for goal in goals %}
-            <li>{{ goal.title }} - {{ goal.progress }}%</li>
-        {% empty %}
-            <li>Нет активных целей</li>
-        {% endfor %}
-    </ul>
-
     <h2>Результаты тестов:</h2>
     <ul>
         {% for result in test_results %}
