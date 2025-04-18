@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'analytics',
     'support',
     'django_extensions',
+    'aichat',
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
