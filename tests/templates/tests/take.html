@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ test.title }}</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
     <h1>{{ test.title }}</h1>
     <h3>{{ test.description }}</h3>
 
@@ -29,5 +28,4 @@
             Завершить тест
         </button>
     </form>
-</body>
-</html>
+{% endblock %}

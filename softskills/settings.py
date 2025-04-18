@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'knowledge',
     'analytics',
     'support',
+    'django_extensions',
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -59,6 +60,7 @@ DATABASES = {
 
 AUTH_USER_MODEL = 'users.User'
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
+
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'

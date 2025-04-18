@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Все тесты</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}ii2i2ii2iiii2iiiiiiiiiii2iiiiiiiii2iiiiiii2iiiiiii2i{% endblock %}
+
+{% block content %}
     <h1>Доступные тесты</h1>
-    <!-- templates/tests/list.html -->
     <ul>
       {% for test in tests %}
         <li>
@@ -16,5 +14,4 @@
         <li>Тесты временно недоступны</li>
       {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %}

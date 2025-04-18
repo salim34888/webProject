@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Результат теста</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
     <h1>Результаты теста: {{ test.title }}</h1>
     <p>Правильных ответов: {{ score }}/{{ total }} ({{ percent }}%)</p>
 
@@ -25,5 +24,4 @@
     {% endfor %}
 
     <a href="{% url 'test_list' %}">← Вернуться к тестам</a>
-</body>
-</html>
+{% endblock %}

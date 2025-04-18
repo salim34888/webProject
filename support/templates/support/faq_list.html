@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 
+{% block title %}fuck off{% endblock %}
+
 {% block content %}
 <h1>Часто задаваемые вопросы</h1>
 
 {% for category in categories %}
 <div class="faq-category">
+    <h1>test test test</h1>
     <h2>{{ category.name }}</h2>
 
     <div class="faq-items">
