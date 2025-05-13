@@ -1,4 +1,4 @@
-#!/home/str1cker/pycharm/.venv/bin/python3
+#!/home/str1cker/pycharmprojects/pycharm/.venv/bin/python3.10
 # -*- coding: utf-8 -*-
 import re
 import sys
